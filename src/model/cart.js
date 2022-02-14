@@ -1,26 +1,29 @@
 const mongoose = require('mongoose')
 
-const cartSchema = new mongoose.Schema({
-    subtotal: {
-        type: Number,
-        required: true
+const cartSchema = new mongoose.Schema(
+    {
+        subtotal: {
+            type: Number,
+            required: true
+        },
+        discount: {
+            type: Number,
+            required: true
+        },
+        taxes: {
+            type: Number,
+            required: true
+        },
+        total: {
+            type: Number,
+            required: true
+        },
+        items: {
+            type: Array,
+            required: true
+        }
     },
-    discount: {
-        type: Number,
-        required: true
-    },
-    taxes: {
-        type: Number,
-        required: true
-    },
-    total: {
-        type: Number,
-        required: true
-    },
-    items: {
-        type: Array,
-        required: true
-    }
-})
+    { timestamps: true }
+)
 
 module.exports = mongoose.model('cart', cartSchema)
