@@ -5,7 +5,7 @@ class CartController {
         try {
             const { itemId, quantity } = req.body
 
-            const cart = await CartService.createItem(itemId, quantity)
+            const cart = await CartService.createCart(itemId, quantity)
 
             res.status(200).send(cart)
         } catch (error) {
