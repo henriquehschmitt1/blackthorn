@@ -2,17 +2,18 @@ const ValidateService = require('../validations/validate')
 const Item = require('../model/item')
 
 class ItemService {
-    static async createItem(req, res) {
-        try {
-            const { name, description, stock, price } = req.body
+    static async createItem(name, description, stock, price) {
+        ValidateService.validateItem(name, description, stock, price)
+        await ItemService.alreadyExists(name)
 
-            ValidateService.validateItem(name, description, stock, price)
-            ItemService.alreadyExists(name)
+        const item = await Item.create({
+            name,
+            description,
+            stock,
+            price
+        })
 
-            res.status(200).send('noice')
-        } catch (error) {
-            res.status(error.statusCode).send(error.message)
-        }
+        return item
     }
 
     static async alreadyExists(name) {
