@@ -1,9 +1,25 @@
+const ObjectId = require('mongoose').Types.ObjectId
+
 class Validate {
     static validateItem(name, description, stock, price) {
         this.exists(name, 'name')
         this.exists(description, 'description')
         this.validateNumber(stock, 'stock')
         this.validateNumber(price, 'price')
+    }
+
+    static validateCartParams(itemId, quantity) {
+        this.exists(itemId, 'itemId')
+        this.validateNumber(quantity, 'quantity')
+    }
+
+    static isObjectId(id) {
+        if (new ObjectId(id) !== id) {
+            throw {
+                statusCode: 400,
+                message: `${id} is not a valid mongo id`
+            }
+        }
     }
 
     static exists(param, paramName) {
