@@ -1,27 +1,32 @@
 class Validate {
     static validateItem(name, description, stock, price) {
-        this.exists(name, 'Please inform the name param')
-        this.exists(description, 'Please inform the description param')
-        this.validateNumber(stock, 'Please inform the stock param')
-        this.validateNumber(price, 'Please inform the price param')
+        this.exists(name, 'name')
+        this.exists(description, 'description')
+        this.validateNumber(stock, 'stock')
+        this.validateNumber(price, 'price')
     }
 
-    static exists(param, message = 'Please inform the param') {
+    static exists(param, paramName) {
         if (!param) {
             throw {
                 statusCode: 400,
-                message
+                message: `Please inform the ${paramName} param`
             }
         }
     }
 
-    static validateNumber(number, message) {
-        this.exists(number, message)
-        this.isNumber(number)
+    static validateNumber(number, paramName) {
+        this.exists(number, paramName)
+        this.isNumber(number, paramName)
     }
 
-    static isNumber(value) {
-        return typeof value === 'number'
+    static isNumber(param, paramName) {
+        if (typeof param !== 'number') {
+            throw {
+                statusCode: 400,
+                message: `The ${paramName} param should be a number`
+            }
+        }
     }
 }
 
