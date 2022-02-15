@@ -61,6 +61,17 @@ class CartService {
         return { cart, items }
     }
 
+    static async checkout(cartId, discount = 0) {
+        ValidateService.isValidId(cartId, 'cartId')
+
+        const { subtotal, taxes } = await CartService.getCartById(cartId)
+
+        const total = subtotal * (1 - discount) * (1 + taxes)
+
+        const updatedAt = new Date()
+        return Cart.findOneAndUpdate({ _id: cartId }, { total, checkedOut: true, updatedAt }, { new: true })
+    }
+
     static async getItemById(id) {
         const item = await Item.findById(id)
         if (!item) {
