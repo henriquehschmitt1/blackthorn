@@ -16,4 +16,6 @@ app.post('/cart/fill', CartController.addToCart)
 
 app.get('/cart/:cartId', CartController.onGet)
 
+app.post('/checkout/:cartId', CartController.onCheckout)
+
 module.exports = app
