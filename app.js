@@ -10,6 +10,8 @@ app.use(express.json())
 
 app.post('/item', ItemController.onPost)
 
-app.post('/fill', CartController.onPost)
+app.post('/cart', CartController.onPost)
+
+app.post('/fillCart', CartController.addToCart)
 
 module.exports = app
