@@ -17,6 +17,10 @@ const cartSchema = new mongoose.Schema(
         total: {
             type: Number,
             required: true
+        },
+        checkedOut: {
+            type: Boolean,
+            default: false
         }
     },
     { timestamps: true }
