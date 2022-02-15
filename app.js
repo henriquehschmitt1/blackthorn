@@ -14,4 +14,6 @@ app.post('/cart', CartController.onPost)
 
 app.post('/fillCart', CartController.addToCart)
 
+app.get('/cart/:cartId', CartController.onGet)
+
 module.exports = app
