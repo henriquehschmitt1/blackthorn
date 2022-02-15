@@ -111,6 +111,15 @@ describe('Cart service', () => {
             await Cart.deleteMany({})
             await CartItem.deleteMany({})
         })
+
+        it('should be able to create a cart into db', async () => {
+            const cart = await CartService.createCart()
+
+            expect(cart.subtotal).toBe(0)
+            expect(cart.discount).toBe(0)
+            expect(cart.taxes).toBe(0.12)
+            expect(cart.total).toBe(0)
+        })
         it('should be able to associate a cart and item into db', async () => {
             const { name, description, stock, price } = itemMock
 
