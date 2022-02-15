@@ -3,6 +3,16 @@ const CartService = require('../services/cart-service')
 class CartController {
     static async onPost(req, res) {
         try {
+            const cart = await CartService.createCart()
+
+            res.status(200).send(cart)
+        } catch (error) {
+            res.status(error.statusCode).send(error.message)
+        }
+    }
+
+    static async addToCart(req, res) {
+        try {
             const { cartId, itemId, quantity } = req.body
 
             const cart = await CartService.associate(cartId, itemId, quantity)
