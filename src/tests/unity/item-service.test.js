@@ -151,4 +151,15 @@ describe('Cart service', () => {
             expect(res.items).toBeTruthy()
         })
     })
+
+    describe('Fail', () => {
+        it('should be able to associate a cart and item into db', async () => {
+            try {
+                await CartService.associate('123456123456', '123456123456', 4)
+            } catch (error) {
+                expect(error.statusCode).toBe(400)
+                expect(error.message).toBe('123456123456 is not a valid mongo id')
+            }
+        })
+    })
 })

@@ -61,11 +61,6 @@ class CartService {
         return { cart, items }
     }
 
-    //temporarily update item stock after adding it to cart -> done
-    //if cart has been checked out, item stock will remain the same
-    //if cart has been deleted/updated, check item stock
-    //checkout method to apply taxes, discounts and calculate the total
-
     static async getItemById(id) {
         const item = await Item.findById(id)
         if (!item) {
