@@ -125,14 +125,9 @@ describe('Cart service', () => {
 
             const item = await ItemService.createItem(name, description, stock, price)
 
-            const cart = await Cart.create({
-                subtotal: 0,
-                discount: 0,
-                taxes: 0.12,
-                total: 0
-            })
-            let res = null
-            res = await CartService.associate(cart._id, item._id, 4)
+            const cart = await CartService.createCart()
+
+            const res = await CartService.associate(cart._id, item._id, 4)
 
             expect(res.cartItem).toBeTruthy()
             expect(res.cart.subtotal).toBe(500)
