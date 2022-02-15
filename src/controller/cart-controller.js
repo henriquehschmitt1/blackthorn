@@ -22,6 +22,18 @@ class CartController {
             res.status(error.statusCode).send(error.message)
         }
     }
+
+    static async onGet(req, res) {
+        try {
+            const { cartId } = req.params
+
+            const cart = await CartService.getById(cartId)
+
+            res.status(200).send(cart)
+        } catch (error) {
+            res.status(error.statusCode).send(error.message)
+        }
+    }
 }
 
 module.exports = CartController
