@@ -21,7 +21,7 @@ class CartService {
         const updatedAt = new Date()
         const cart = await Cart.findOneAndUpdate(
             { _id: cartId },
-            { subtotal: subtotal + price, updatedAt },
+            { subtotal: subtotal + price * quantity, updatedAt },
             { new: true }
         )
         const item = await Item.findOneAndUpdate({ _id: itemId }, { stock: stock - quantity, updatedAt }, { new: true })
