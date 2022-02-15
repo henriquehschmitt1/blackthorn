@@ -153,12 +153,32 @@ describe('Cart service', () => {
     })
 
     describe('Fail', () => {
-        it('should be able to associate a cart and item into db', async () => {
+        beforeEach(async () => {
+            await Item.deleteMany({})
+            await Cart.deleteMany({})
+            await CartItem.deleteMany({})
+        })
+        it('shouldnt be able to associate a cart and item into db with invalid id', async () => {
             try {
                 await CartService.associate('123456123456', '123456123456', 4)
             } catch (error) {
                 expect(error.statusCode).toBe(400)
                 expect(error.message).toBe('123456123456 is not a valid mongo id')
+            }
+        })
+
+        it('shouldnt be able to associate a cart and item into db if quantity is greater than stock', async () => {
+            try {
+                const { name, description, stock, price } = itemMock
+
+                const item = await ItemService.createItem(name, description, stock, price)
+
+                const cart = await CartService.createCart()
+
+                const res = await CartService.associate(cart._id, item._id, 6)
+            } catch (error) {
+                expect(error.statusCode).toBe(400)
+                expect(error.message).toBe('Quantity is greater than stock, please verify')
             }
         })
     })
