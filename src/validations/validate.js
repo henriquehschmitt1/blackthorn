@@ -15,7 +15,7 @@ class Validate {
     }
 
     static isObjectId(id) {
-        if (String(new ObjectId(id)) === id) {
+        if (ObjectId(id).toString() !== id.toString()) {
             throw {
                 statusCode: 400,
                 message: `${id} is not a valid mongo id`
