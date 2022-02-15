@@ -35,7 +35,7 @@ describe('Item service', () => {
             expect(items.length).toBe(2)
         })
 
-        it('should be able to update an items in db', async () => {
+        it('should be able to update an item in db', async () => {
             const { name, description, stock, price } = itemMock
 
             const item = await ItemService.createItem(name, description, stock, price)
@@ -43,6 +43,19 @@ describe('Item service', () => {
             const updatedItem = await ItemService.updateItems(item._id.toString(), 'samsung', 'android phone', 15, 233)
 
             expect(updatedItem.name).toBe('samsung')
+            expect(updatedItem.description).toBe('android phone')
+            expect(updatedItem.stock).toBe(15)
+            expect(updatedItem.price).toBe(233)
+        })
+
+        it('should be able to update an item in db, without name param', async () => {
+            const { name, description, stock, price } = itemMock
+
+            const item = await ItemService.createItem(name, description, stock, price)
+
+            const updatedItem = await ItemService.updateItems(item._id.toString(), '', 'android phone', 15, 233)
+
+            expect(updatedItem.name).toBe(name)
             expect(updatedItem.description).toBe('android phone')
             expect(updatedItem.stock).toBe(15)
             expect(updatedItem.price).toBe(233)
