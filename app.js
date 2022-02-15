@@ -10,6 +10,8 @@ app.use(express.json())
 
 app.post('/item', ItemController.onPost)
 
+app.get('/item', ItemController.onGet)
+
 app.post('/cart', CartController.onPost)
 
 app.post('/cart/fill', CartController.addToCart)
