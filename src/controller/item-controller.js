@@ -12,6 +12,16 @@ class ItemController {
             res.status(error.statusCode).send(error.message)
         }
     }
+
+    static async onGet(req, res) {
+        try {
+            const items = await ItemService.findItems()
+
+            res.status(200).send(items)
+        } catch (error) {
+            res.status(error.statusCode).send(error.message)
+        }
+    }
 }
 
 module.exports = ItemController
