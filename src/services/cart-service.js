@@ -2,6 +2,7 @@ const ValidateService = require('../validations/validate')
 const Item = require('../model/item')
 const Cart = require('../model/cart')
 const CartItem = require('../model/cart-item')
+const tax = 0.12
 
 class CartService {
     static async associate(cartId, itemId, quantity) {
@@ -22,6 +23,15 @@ class CartService {
         const item = await Item.findOneAndUpdate({ _id: itemId }, { stock: stock - quantity }, { new: true })
 
         return { cartItem, cart, item }
+    }
+
+    static async createCart() {
+        return Cart.create({
+            subtotal: 0,
+            discount: 0,
+            taxes: tax,
+            total: 0
+        })
     }
 
     //temporarily update item stock after adding it to cart -> done
