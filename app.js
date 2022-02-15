@@ -12,7 +12,7 @@ app.post('/item', ItemController.onPost)
 
 app.post('/cart', CartController.onPost)
 
-app.post('/fillCart', CartController.addToCart)
+app.post('/cart/fill', CartController.addToCart)
 
 app.get('/cart/:cartId', CartController.onGet)
 
