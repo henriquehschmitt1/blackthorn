@@ -123,11 +123,7 @@ describe('Cart service', () => {
                 total: 0
             })
             let res = null
-            try {
-                res = await CartService.associate(cart._id, item._id, 4)
-            } catch (error) {
-                console.log(error)
-            }
+            res = await CartService.associate(cart._id, item._id, 4)
 
             expect(res.cartItem).toBeTruthy()
             expect(res.cart.subtotal).toBe(500)
