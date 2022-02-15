@@ -131,7 +131,9 @@ describe('Cart service', () => {
 
             expect(res.cartItem).toBeTruthy()
             expect(res.cart.subtotal).toBe(500)
+            expect(res.cart.updatedAt).toBeTruthy()
             expect(res.item.stock).toBe(1)
+            expect(res.item.updatedAt).toBeTruthy()
         })
     })
 })
