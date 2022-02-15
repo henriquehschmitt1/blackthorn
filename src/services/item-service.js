@@ -16,6 +16,10 @@ class ItemService {
         return item
     }
 
+    static async findItems() {
+        return Item.find({}).lean()
+    }
+
     static async alreadyExists(name) {
         const item = await Item.findOne({ name })
 
