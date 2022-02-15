@@ -8,6 +8,11 @@ const Cart = require('../../model/cart')
 const CartItem = require('../../model/cart-item')
 
 describe('Item service', () => {
+    afterAll(async () => {
+        await Item.deleteMany({})
+        await Cart.deleteMany({})
+        await CartItem.deleteMany({})
+    })
     describe('Success', () => {
         beforeEach(async () => {
             await Item.deleteMany({})
@@ -116,6 +121,11 @@ describe('Item service', () => {
 })
 
 describe('Cart service', () => {
+    afterAll(async () => {
+        await Item.deleteMany({})
+        await Cart.deleteMany({})
+        await CartItem.deleteMany({})
+    })
     describe('Success', () => {
         beforeEach(async () => {
             await Item.deleteMany({})
