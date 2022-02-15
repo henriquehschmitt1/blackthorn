@@ -8,8 +8,9 @@ class Validate {
         this.validateNumber(price, 'price')
     }
 
-    static validateCartParams(itemId, quantity) {
-        this.exists(itemId, 'itemId')
+    static validateCartParams(cartId, itemId, quantity) {
+        this.isValidId(itemId, 'itemId')
+        this.isValidId(cartId, 'cartId')
         this.validateNumber(quantity, 'quantity')
     }
 
@@ -20,6 +21,11 @@ class Validate {
                 message: `${id} is not a valid mongo id`
             }
         }
+    }
+
+    static isValidId(param, paramName) {
+        this.exists(param, paramName)
+        this.isObjectId(param)
     }
 
     static exists(param, paramName) {
