@@ -1,6 +1,11 @@
 const ItemService = require('../../services/item-service')
+const CartService = require('../../services/cart-service')
+
 const { itemMock } = require('../mock/item-mock')
+
 const Item = require('../../model/item')
+const Cart = require('../../model/cart')
+const CartItem = require('../../model/cart-item')
 
 describe('Item service', () => {
     describe('Success', () => {
@@ -95,6 +100,38 @@ describe('Item service', () => {
                 expect(error.statusCode).toBe(400)
                 expect(error.message).toBe('Item already exists in DB')
             }
+        })
+    })
+})
+
+describe('Cart service', () => {
+    describe('Success', () => {
+        beforeEach(async () => {
+            await Item.deleteMany({})
+            await Cart.deleteMany({})
+            await CartItem.deleteMany({})
+        })
+        it('should be able to associate a cart and item into db', async () => {
+            const { name, description, stock, price } = itemMock
+
+            const item = await ItemService.createItem(name, description, stock, price)
+
+            const cart = await Cart.create({
+                subtotal: 0,
+                discount: 0,
+                taxes: 0.12,
+                total: 0
+            })
+            let res = null
+            try {
+                res = await CartService.associate(cart._id, item._id, 4)
+            } catch (error) {
+                console.log(error)
+            }
+
+            expect(res.cartItem).toBeTruthy()
+            expect(res.cart.subtotal).toBe(500)
+            expect(res.item.stock).toBe(1)
         })
     })
 })
