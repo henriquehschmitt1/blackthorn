@@ -43,7 +43,7 @@ class CartService {
 
         const cart = await CartService.getCartById(cartId)
 
-        const cartItems = await CartItem.find(cartId)
+        const cartItems = await CartItem.find({ cartId })
 
         const items = []
 
