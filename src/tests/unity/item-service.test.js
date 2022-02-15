@@ -18,6 +18,17 @@ describe('Item service', () => {
             const item = await ItemService.createItem(name, description, stock, price)
             expect(item.id).toBeTruthy()
         })
+
+        it('should be able to find all items into db', async () => {
+            const { name, description, stock, price } = itemMock
+
+            await ItemService.createItem(name, description, stock, price)
+            await ItemService.createItem('other iphone', description, stock, price)
+
+            const items = await ItemService.findItems()
+
+            expect(items.length).toBe(2)
+        })
     })
 
     describe('Fail', () => {
