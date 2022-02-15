@@ -12,6 +12,8 @@ app.post('/item', ItemController.onPost)
 
 app.get('/item', ItemController.onGet)
 
+app.put('/item/:itemId', ItemController.onPut)
+
 app.post('/cart', CartController.onPost)
 
 app.post('/cart/fill', CartController.addToCart)
