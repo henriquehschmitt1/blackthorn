@@ -34,6 +34,19 @@ class CartController {
             res.status(error.statusCode).send(error.message)
         }
     }
+
+    static async onCheckout(req, res) {
+        try {
+            const { cartId } = req.params
+            const { discount } = req.body
+
+            const cart = await CartService.checkout(cartId, discount)
+
+            res.status(200).send(cart)
+        } catch (error) {
+            res.status(error.statusCode).send(error.message)
+        }
+    }
 }
 
 module.exports = CartController
