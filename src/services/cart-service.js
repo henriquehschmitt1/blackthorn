@@ -38,6 +38,29 @@ class CartService {
         })
     }
 
+    static async getById(cartId) {
+        ValidateService.isValidId(cartId, 'cartId')
+
+        const cart = await CartService.getCartById(cartId)
+
+        const cartItems = await CartItem.find(cartId)
+
+        const items = []
+
+        for (let cartItem of cartItems) {
+            const { name, description, price } = await CartService.getItemById(cartItem.itemId)
+
+            items.push({
+                name,
+                description,
+                price,
+                quantity: cartItem.quantity
+            })
+        }
+
+        return { cart, items }
+    }
+
     //temporarily update item stock after adding it to cart -> done
     //if cart has been checked out, item stock will remain the same
     //if cart has been deleted/updated, check item stock
@@ -55,7 +78,7 @@ class CartService {
     }
 
     static async getCartById(id) {
-        const cart = await Cart.findById(id)
+        const cart = await Cart.findById(id).lean()
         if (!cart) {
             throw {
                 statusCode: 400,
