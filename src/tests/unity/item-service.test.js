@@ -135,5 +135,20 @@ describe('Cart service', () => {
             expect(res.item.stock).toBe(1)
             expect(res.item.updatedAt).toBeTruthy()
         })
+
+        it('should be able to get a cart by id', async () => {
+            const { name, description, stock, price } = itemMock
+
+            const item = await ItemService.createItem(name, description, stock, price)
+
+            const cart = await CartService.createCart()
+
+            await CartService.associate(cart._id, item._id, 4)
+
+            const res = await CartService.getById(cart._id)
+
+            expect(res.cart.subtotal).toBeTruthy()
+            expect(res.items).toBeTruthy()
+        })
     })
 })
