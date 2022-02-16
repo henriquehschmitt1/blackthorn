@@ -197,6 +197,36 @@ describe('Cart service', () => {
             expect(res.cart.subtotal).toBeTruthy()
             expect(res.items).toBeTruthy()
         })
+
+        it('should be able to checkout a cart by id without discount', async () => {
+            const { name, description, stock, price } = itemMock
+
+            const item = await ItemService.createItem(name, description, stock, price)
+
+            const cart = await CartService.createCart()
+
+            await CartService.associate(cart._id, item._id, 4)
+
+            const res = await CartService.checkout(cart._id)
+
+            expect(res.checkedOut).toBeTruthy()
+            expect(res.total).toBe(2240)
+        })
+
+        it('should be able to checkout a cart by id with discount', async () => {
+            const { name, description, stock, price } = itemMock
+
+            const item = await ItemService.createItem(name, description, stock, price)
+
+            const cart = await CartService.createCart()
+
+            await CartService.associate(cart._id, item._id, 4)
+
+            const res = await CartService.checkout(cart._id, 0.5)
+
+            expect(res.checkedOut).toBeTruthy()
+            expect(res.total).toBe(1120)
+        })
     })
 
     describe('Fail', () => {
@@ -226,6 +256,23 @@ describe('Cart service', () => {
             } catch (error) {
                 expect(error.statusCode).toBe(400)
                 expect(error.message).toBe('Quantity is greater than stock, please verify')
+            }
+        })
+
+        it('shouldnt be able to checkout a cart by id with discount greater than 1', async () => {
+            try {
+                const { name, description, stock, price } = itemMock
+
+                const item = await ItemService.createItem(name, description, stock, price)
+
+                const cart = await CartService.createCart()
+
+                await CartService.associate(cart._id, item._id, 4)
+
+                const res = await CartService.checkout(cart._id, 5)
+            } catch (error) {
+                expect(error.statusCode).toBe(400)
+                expect(error.message).toBe('discount param cannot be over 1')
             }
         })
     })
