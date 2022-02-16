@@ -62,7 +62,7 @@ class CartService {
     }
 
     static async checkout(cartId, discount = 0) {
-        ValidateService.isValidId(cartId, 'cartId')
+        ValidateService.validateCheckout(discount, cartId)
 
         const { subtotal, taxes } = await CartService.getCartById(cartId)
 
