@@ -63,6 +63,7 @@ Create a .env file at the project root and refer to [.env.test](https://github.c
 ```bash
 {
     Path example:
+
     https://blackthorn-assessment-2022.herokuapp.com/checkout/507f1f77bcf86cd799439011
 
     Body example:
@@ -78,9 +79,11 @@ Create a .env file at the project root and refer to [.env.test](https://github.c
 ```bash
 {
     Path example:
+
     https://blackthorn-assessment-2022.herokuapp.com/item/507f1f77bcf86cd799439011
 
     Body example:
+
     name: 'iphone 13',
     description: 'really cool phone, but now, cooler',
     stock: 15,
