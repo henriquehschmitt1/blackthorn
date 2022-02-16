@@ -16,7 +16,14 @@ class CartService {
             cartId,
             quantity
         })
-        const { subtotal } = await CartService.getCartById(cartId)
+        const { subtotal, checkedOut } = await CartService.getCartById(cartId)
+
+        if (checkedOut) {
+            throw {
+                statusCode: 400,
+                message: 'This cart has already been checked out.'
+            }
+        }
 
         const updatedAt = new Date()
         const cart = await Cart.findOneAndUpdate(
