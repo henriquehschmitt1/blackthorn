@@ -275,5 +275,24 @@ describe('Cart service', () => {
                 expect(error.message).toBe('discount param cannot be over 1')
             }
         })
+
+        it('shouldnt be able to add an item to a cart if its already checked out', async () => {
+            try {
+                const { name, description, stock, price } = itemMock
+
+                const item = await ItemService.createItem(name, description, stock, price)
+
+                const cart = await CartService.createCart()
+
+                await CartService.associate(cart._id, item._id, 4)
+
+                await CartService.checkout(cart._id)
+
+                await CartService.associate(cart._id, item._id, 1)
+            } catch (error) {
+                expect(error.statusCode).toBe(400)
+                expect(error.message).toBe('This cart has already been checked out.')
+            }
+        })
     })
 })
