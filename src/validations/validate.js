@@ -14,6 +14,16 @@ class Validate {
         this.validateNumber(quantity, 'quantity')
     }
 
+    static validateCheckout(discount, cartId) {
+        this.isValidId(cartId, 'cartId')
+        if (discount > 1) {
+            throw {
+                statusCode: 400,
+                message: 'discount param cannot be over 1'
+            }
+        }
+    }
+
     static isObjectId(id) {
         if (ObjectId(id).toString() !== id.toString()) {
             throw {
