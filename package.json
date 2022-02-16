@@ -21,7 +21,8 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "mongoose": "^6.2.1",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "throng": "^5.0.0"
   },
   "devDependencies": {
     "jest": "^27.5.1"
