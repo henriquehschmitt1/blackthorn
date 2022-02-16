@@ -9,7 +9,9 @@ const app = express()
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.status(200).send('Please refer to the api docs to see all the routes :)')
+    res.status(200).send(
+        'Please refer to the api docs to see all the routes :) https://github.com/henriquehschmitt1/blackthorn'
+    )
 })
 
 app.post('/item', ItemController.onPost)
